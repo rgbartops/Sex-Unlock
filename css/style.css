@@ -481,3 +481,33 @@ footer li,
 footer a:hover {
   color: #d81b60 !important;
 }
+/* Articles Grid ko balanced size mein rakhne ke liye */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Har ek article card ki styling taaki size bilkul sahi rahe */
+.articles-grid .article-card, 
+.articles-grid > div {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card ke andar ki image ka size control karne ke liye */
+.articles-grid img {
+  width: 100%;
+  height: 180px; /* Isse image na zyada badi hogi aur na choti */
+  object-fit: cover;
+}
+
+/* Card ke andar ke text ka spacing */
+.articles-grid .card-content {
+  padding: 15px;
+}
