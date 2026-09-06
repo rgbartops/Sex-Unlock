@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>लेख खोजें (Search Articles) | Sex Unlock</title>
+  <meta name="description" content="Sex Unlock par sexual health aur wellness से jude articles search karein.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container navbar">
+<a href="index.html" class="logo-img-link">
+  <img src="assets/images/logo.png" alt="Sex Unlock" style="height: 45px; width: auto; vertical-align: middle;">
+</a>
+      <nav class="nav-links">
+        <a href="index.html">होम</a>
+        <a href="categories.html">श्रेणियाँ (Categories)</a>
+        <a href="about.html">हमारे बारे में</a>
+        <a href="contact.html">संपर्क करें</a>
+      </nav>
+      <button class="search-btn-nav" onclick="window.location.href='search.html'">
+        🔍 खोजें
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container" style="padding: 60px 0; min-height: 60vh;">
+    <div style="max-width: 700px; margin: 0 auto 50px; text-align: center;">
+      <h1 style="font-size: 38px; font-weight: 900; color: var(--primary); margin-bottom: 16px;">लेख खोजें (Search)</h1>
+      <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 30px;">कीword टाइप करें और अपनी जरूरत की जानकारी तुरंत पाएं।</p>
+      
+      <!-- Search Input Box -->
+      <div style="position: relative;">
+        <input type="text" id="search-input" placeholder="यहाँ टाइप करें (उदा. यौन स्वास्थ्य, सेफ सेक्स)..." style="width: 100%; padding: 18px 24px; font-size: 16px; border-radius: 50px; border: 2px solid var(--border-color); outline: none; transition: var(--transition); background: var(--card-bg);">
+      </div>
+    </div>
+
+    <!-- Search Results Grid -->
+    <div id="search-results-grid" class="articles-grid">
+      <!-- Results will appear here -->
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h3>Sex <span>Unlock</span></h3>
+          <p>यह प्लेटफॉर्म वयस्क पाठकों के लिए यौन स्वास्थ्य, जागरूकता और कल्याण से जुड़ी प्रमाणित जानकारी प्रदान करता है[cite: 7]。</p>
+        </div>
+        <div class="footer-col">
+          <h3>त्वरित लिंक्स</h3>
+          <ul>
+            <li><a href="about.html">हमारे बारे में</a></li>
+            <li><a href="editorial-policy.html">संपादकीय नीति</a></li>
+            <li><a href="disclaimer.html">अस्वीकरण (Disclaimer)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>कानूनी और नीतियां</h3>
+          <ul>
+            <li><a href="privacy.html">गोपनीयता नीति (Privacy Policy)</a></li>
+            <li><a href="terms.html">नियम व शर्तें (Terms & Conditions)</a></li>
+            <li><a href="contact.html">हमसे संपर्क करें</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Sex Unlock. सभी अधिकार सुरक्षित।</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SEARCH JAVASCRIPT -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById('search-input');
+      searchInput.addEventListener('input', (e) => {
+        handleSearch(e.target.value);
+      });
+      // Load all initially
+      handleSearch('');
+    });
+
+    async function handleSearch(query) {
+      try {
+        const response = await fetch('data/articles.json');
+        const articles = await response.json();
+        
+        const filtered = articles.filter(article => {
+          const q = query.toLowerCase();
+          return article.title.toLowerCase().includes(q) || 
+                 article.excerpt.toLowerCase().includes(q) || 
+                 article.category.toLowerCase().includes(q);
+        });
+
+        const grid = document.getElementById('search-results-grid');
+        if (filtered.length === 0) {
+          grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">कोई लेख नहीं मिला।</p>`;
+          return;
+        }
+
+        grid.innerHTML = filtered.map(article => `
+          <article class="article-card">
+            <div class="card-img-wrapper">
+              <img src="${article.image}" alt="${article.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80'">
+            </div>
+            <div class="card-content">
+              <span class="card-category">${article.category}</span>
+              <h3 class="card-title">
+                <a href="article.html?slug=${article.slug}">${article.title}</a>
+              </h3>
+              <p class="card-excerpt">${article.excerpt}</p>
+              <div class="card-meta">
+                <span>${article.date}</span>
+                <span>${article.readingTime}</span>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+      } catch (err) {
+        console.error('Search error:', err);
+      }
+    }
+  </script>
+</body>
+</html>
