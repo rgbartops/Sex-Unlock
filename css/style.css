@@ -377,3 +377,46 @@ footer a:hover {
     gap: 30px;
   }
 }
+
+/* --- ARTICLE PAGE: FEATURED IMAGE FIX ---
+   article.js gives the wrapper only max-height (no height), so the
+   <img height:100%> inside had nothing to be 100% OF, and rendered at
+   its natural (often huge, portrait) size, getting clipped oddly.
+   Forcing a real, fixed height on the wrapper fixes the crop. */
+.article-featured-img {
+  height: 380px !important;
+  max-height: 380px !important;
+  width: 100% !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.article-featured-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 25% !important; /* keeps faces/top of portrait photos in frame */
+  display: block !important;
+}
+
+/* Article body readability: don't let it stretch edge-to-edge on wide screens */
+.article-main-container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.detailed-article-box {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .article-featured-img {
+    height: 220px !important;
+    max-height: 220px !important;
+  }
+  .detailed-article-box {
+    padding: 24px !important;
+  }
+}
