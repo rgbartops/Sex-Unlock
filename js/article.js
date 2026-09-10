@@ -69,8 +69,8 @@ async function loadArticleDetails() {
           <span>${article.readingTime}</span>
         </div>
 
-        <div class="article-featured-img" style="margin-bottom: 40px; border-radius: 12px; overflow: hidden; max-height: 450px;">
-          <img src="${article.image}" alt="${article.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80'">
+        <div class="article-featured-img">
+          <img src="${article.image}" alt="${article.title}" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80'">
         </div>
 
         <div class="article-body-content" style="font-size: 17px; line-height: 1.9; color: var(--text-main);">
