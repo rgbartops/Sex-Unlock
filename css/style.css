@@ -58,14 +58,15 @@ header {
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 12px 0;
+  padding: 8px 0;
+  overflow: hidden; /* safety net: nothing inside header can ever spill out again */
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  min-height: 70px;
 }
 
 .logo {
@@ -83,11 +84,11 @@ header {
   -webkit-text-fill-color: transparent;
 }
 
-/* Logo image inside header, sized to fit the yellow bar without overflowing */
+/* Logo image inside header, sized to fill the yellow bar's height without overflowing it */
 header .logo-img-link img {
-  height: 48px;
+  height: 64px;
   width: auto;
-  max-height: 48px;
+  max-height: 64px;
   display: block;
   vertical-align: middle;
 }
