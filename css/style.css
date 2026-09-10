@@ -383,20 +383,24 @@ footer a:hover {
    article.js gives the wrapper only max-height (no height), so the
    <img height:100%> inside had nothing to be 100% OF, and rendered at
    its natural (often huge, portrait) size, getting clipped oddly.
-   Forcing a real, fixed height on the wrapper fixes the crop. */
+   Forcing a real, fixed height on the wrapper fixes that.
+   object-fit is set to "contain" (not "cover") so the FULL uploaded
+   photo is always visible, never cropped — any leftover space on
+   the sides/top/bottom is filled with a soft neutral background
+   instead of chopping off part of the image. */
 .article-featured-img {
   height: 380px !important;
   max-height: 380px !important;
   width: 100% !important;
   border-radius: 12px !important;
   overflow: hidden !important;
+  background: #f1f5f9 !important;
 }
 
 .article-featured-img img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover !important;
-  object-position: center 25% !important; /* keeps faces/top of portrait photos in frame */
+  object-fit: contain !important;
   display: block !important;
 }
 
