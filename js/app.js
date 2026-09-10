@@ -13,10 +13,34 @@ async function fetchArticles() {
       throw new Error('Articles data load karne mein samasya aayi.');
     }
     const articles = await response.json();
-    renderFeaturedArticle(articles);
-    renderLatestArticles(articles);
+
+    // Agar URL mein ?cat=... hai, to sirf usi category ke articles dikhao
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCategory = urlParams.get('cat');
+    const filteredArticles = selectedCategory
+      ? articles.filter(article => article.category === selectedCategory)
+      : articles;
+
+    updateCategoryHeading(selectedCategory, filteredArticles.length);
+    renderFeaturedArticle(filteredArticles);
+    renderLatestArticles(filteredArticles);
   } catch (error) {
     console.error('Error fetching articles:', error);
+  }
+}
+
+// Category filter active hone par heading/section-title update karna, taaki user ko pata chale ki filter lag chuka hai
+function updateCategoryHeading(selectedCategory, count) {
+  const heading = document.querySelector('#latest-articles-grid')?.previousElementSibling;
+  if (!heading || !heading.classList.contains('section-title')) return;
+
+  const span = heading.querySelector('span');
+  if (!span) return;
+
+  if (selectedCategory) {
+    span.textContent = `${selectedCategory} (${count} लेख)`;
+  } else {
+    span.textContent = 'नवीनतम लेख (Latest Articles)';
   }
 }
 
@@ -51,6 +75,11 @@ function renderFeaturedArticle(articles) {
 function renderLatestArticles(articles) {
   const gridContainer = document.getElementById('latest-articles-grid');
   if (!gridContainer) return;
+
+  if (articles.length === 0) {
+    gridContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 40px 0;">इस श्रेणी में अभी कोई लेख उपलब्ध नहीं है।</p>`;
+    return;
+  }
 
   gridContainer.innerHTML = articles.map(article => `
     <article class="article-card">
