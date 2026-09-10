@@ -77,6 +77,8 @@ async function loadArticleDetails() {
           ${article.content}
         </div>
 
+        <div id="banner-ad-slot" style="margin: 40px 0; display: flex; justify-content: center;"></div>
+
         ${article.faq && article.faq.length > 0 ? `
           <div class="article-faq-section" style="margin-top: 50px; background: #f8fafc; padding: 30px; border-radius: 12px; border-left: 5px solid var(--accent-teal);">
             <h3 style="font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 16px;">अक्सर पूछे जाने वाले सवाल (FAQs)</h3>
@@ -92,6 +94,19 @@ async function loadArticleDetails() {
         </div>
       </article>
     `;
+
+    // Banner ad ko manually inject karna — innerHTML ke andar <script> tags automatically
+    // execute nahi hote, isliye createElement se properly banana zaroori hai.
+    const bannerSlot = document.getElementById('banner-ad-slot');
+    if (bannerSlot) {
+      const optionsScript = document.createElement('script');
+      optionsScript.text = "atOptions = { 'key' : 'f948fb3887380541102def88b92cfa1f', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };";
+      bannerSlot.appendChild(optionsScript);
+
+      const invokeScript = document.createElement('script');
+      invokeScript.src = 'https://www.highrevenueformat.com/f948fb3887380541102def88b92cfa1f/invoke.js';
+      bannerSlot.appendChild(invokeScript);
+    }
 
   } catch (error) {
     console.error('Error loading article:', error);
