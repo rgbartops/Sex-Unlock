@@ -151,31 +151,66 @@ header .logo-img-link img {
 
 /* --- HERO SECTION --- */
 .hero-section {
-  padding: 90px 0 70px;
-  text-align: center;
+  padding: 40px 0;
+  text-align: left;
   background: radial-gradient(circle at center, rgba(13, 148, 136, 0.08) 0%, transparent 70%);
   margin-bottom: 60px;
   border-bottom: 2px solid rgba(13, 148, 136, 0.1);
 }
 
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.hero-image {
+  flex: 0 0 auto;
+  width: 220px;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+}
+
+.hero-text {
+  flex: 1;
+}
+
 .hero-section h1 {
-  font-size: 52px;
+  font-size: 40px;
   font-weight: 900;
   background: linear-gradient(135deg, var(--primary), var(--accent-teal));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   letter-spacing: -1.5px;
   line-height: 1.2;
 }
 
 .hero-section p {
-  font-size: 19px;
+  font-size: 17px;
   color: var(--text-muted);
   max-width: 750px;
-  margin: 0 auto;
-  line-height: 1.7;
+  margin: 0;
+  line-height: 1.6;
   font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-image {
+    width: 160px;
+  }
+  .hero-section p {
+    margin: 0 auto;
+  }
 }
 
 /* --- SECTIONS & HEADINGS --- */
